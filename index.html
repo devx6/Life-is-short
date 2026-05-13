@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life is short</title>
+    <!-- 引入 Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* 中间核心文字 */
+        .text {
+            color: #00ff88;
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            position: relative;
+            user-select: none;
+        }
+
+        .text::after {
+            content: '_';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* 底部链接栏 */
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer a {
+            color: #00ff88;
+            text-decoration: none;
+            font-size: 1.5rem; /* 图标稍大一点更有冲击力 */
+            transition: all 0.3s ease;
+            opacity: 0.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 链接文字微调 */
+        .footer a span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer a:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+            text-shadow: 0 0 15px #00ff88;
+        }
+
+        @media (max-width: 600px) {
+            .text { font-size: 2rem; }
+            .footer { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="text">Life is short</div>
+
+    <div class="footer">
+        <!-- GitHub 图标 -->
+        <a href="https://github.com/wilmerwang" target="_blank" title="GitHub">
+            <i class="fa-brands fa-github"></i>
+            <span>Github</span>
+        </a>
+    </div>
+
+</body>
+</html>
