@@ -6,6 +6,9 @@
 <title>Life is short</title>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
 <style>
 body {
@@ -187,6 +190,12 @@ body {
 .footer { z-index: 10; }
 #notes { z-index: 1; }
 
+.katex-display {
+    display: block;
+    text-align: center;
+    margin: 8px auto;
+}
+
 /* ================= FLOAT ANIMATION ================= */
 @keyframes float {
     0% { transform: translateY(0px); }
@@ -221,7 +230,6 @@ body {
 </div>
 
 <script>
-const token = "xx"; // optional: for higher rate limits, but not required for public repos with low traffic
 const owner = "devx6";
 const repo = "Life-is-short";
 
@@ -289,10 +297,21 @@ async function loadIssues() {
             const theme = randomTheme();
             card.className = "note " + theme;
 
+            const html = marked.parse(clamp(issue.body || ""));
+
             card.innerHTML = `
                 <div class="title">${issue.title}</div>
-                <div class="body">${marked.parse(clamp(issue.body || ""))}</div>
+                <div class="body">${html}</div>
             `;
+
+            setTimeout(() => {
+                renderMathInElement(card, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
+                    ]
+                });
+            }, 0);
 
             link.appendChild(card);
             wrapper.appendChild(link);
