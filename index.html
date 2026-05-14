@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Life is short</title>
-    <!-- 引入 Font Awesome 图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <style>
         body {
             margin: 0;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #000000;
+            background: #000;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
         }
 
-        /* 中间核心文字 */
+        /* Main text */
         .text {
             color: #00ff88;
             font-size: 3.5rem;
@@ -30,62 +32,125 @@
         }
 
         .text::after {
-            content: '_';
+            content: "_";
             animation: blink 1s infinite;
         }
 
-        @keyframes blink { 50% { opacity: 0; } }
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
 
-        /* 底部链接栏 */
+        /* Footer */
         .footer {
             position: absolute;
-            bottom: 40px;
-            display: flex;
-            gap: 30px;
+            bottom: 42px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .footer a {
             color: #00ff88;
             text-decoration: none;
-            font-size: 1.5rem; /* 图标稍大一点更有冲击力 */
-            transition: all 0.3s ease;
-            opacity: 0.6;
+
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-        }
+            gap: 6px;
 
-        /* 链接文字微调 */
-        .footer a span {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            opacity: 0.55;
+
+            transition: all 0.25s ease;
         }
 
         .footer a:hover {
             opacity: 1;
-            transform: translateY(-5px);
-            text-shadow: 0 0 15px #00ff88;
+            text-shadow: 0 0 12px rgba(0, 255, 136, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* Stars row */
+        .stars {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        /* Text row */
+        .remain {
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+            opacity: 0.8;
         }
 
         @media (max-width: 600px) {
-            .text { font-size: 2rem; }
-            .footer { gap: 20px; }
+            .text {
+                font-size: 2rem;
+            }
+
+            .stars {
+                font-size: 0.82rem;
+            }
+
+            .remain {
+                font-size: 0.68rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="text">Life is short</div>
 
-    <!-- <div class="footer"> -->
-        <!-- GitHub 图标 -->
-        <!-- <a href="https://github.com/wilmerwang" target="_blank" title="GitHub"> -->
-            <!-- <i class="fa-brands fa-github"></i> -->
-            <!-- <span>Github</span> -->
-        <!-- </a> -->
-    <!-- </div> -->
+    <div class="footer">
+        <a href="https://github.com/devx6/Life-is-short"
+           target="_blank"
+           rel="noopener noreferrer">
+
+            <!-- Stars -->
+            <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <span id="stars">...</span>
+            </div>
+
+            <!-- Small text -->
+            <div class="remain">
+                some things remain
+            </div>
+
+        </a>
+    </div>
+
+    <script>
+        // 修改成你的 GitHub 用户名和仓库名
+        const owner = "devx6";
+        const repo = "Life-is-short";
+
+        async function loadStars() {
+            try {
+                const response = await fetch(
+                    `https://api.github.com/repos/${owner}/${repo}`
+                );
+
+                const data = await response.json();
+
+                document.getElementById("stars").textContent =
+                    data.stargazers_count ?? "0";
+
+            } catch (error) {
+                document.getElementById("stars").textContent = "?";
+                console.error("Failed to load stars:", error);
+            }
+        }
+
+        loadStars();
+    </script>
 
 </body>
 </html>
